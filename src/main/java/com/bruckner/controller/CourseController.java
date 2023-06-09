@@ -23,4 +23,8 @@ public class CourseController {
   public List<Course> list() {
     return courseRepository.findAll();
   }
+
+  void teste(){
+    System.out.println("nada");
+  }
 }
