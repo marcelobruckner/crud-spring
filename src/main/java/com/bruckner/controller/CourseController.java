@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -25,6 +26,13 @@ public class CourseController {
   public ResponseEntity<Course> create(@RequestBody Course course){
     return ResponseEntity.status(HttpStatus.CREATED)
             .body(courseRepository.save(course));
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Course> findById(@PathVariable Long id) {
+    return courseRepository.findById(id)
+           .map(course -> ResponseEntity.ok().body(course))
+           .orElse(ResponseEntity.notFound().build());
   }
 }
 

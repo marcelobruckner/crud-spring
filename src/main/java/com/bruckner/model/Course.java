@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 public class Course {
 
+    @JsonProperty("_id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
