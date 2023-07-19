@@ -1,9 +1,8 @@
 package com.bruckner.repository;
 
-import com.bruckner.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import com.bruckner.model.Course;
+
 public interface CourseRepository extends JpaRepository<Course, Long> {
 }
