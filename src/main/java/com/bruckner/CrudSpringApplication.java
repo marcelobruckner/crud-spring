@@ -1,5 +1,6 @@
 package com.bruckner;
 
+import com.bruckner.enums.Category;
 import com.bruckner.model.Course;
 import com.bruckner.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +22,7 @@ public class CrudSpringApplication {
 
 			Course course = new Course();
 			course.setName("Angular com Spring");
-			course.setCategory("Front-end");
+			course.setCategory(Category.FRONT_END);
 			courseRepository.save(course);
 		};
 	}

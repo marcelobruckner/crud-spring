@@ -3,6 +3,7 @@ package com.bruckner.dto.mapper;
 import org.springframework.stereotype.Component;
 
 import com.bruckner.dto.CourseDTO;
+import com.bruckner.enums.Category;
 import com.bruckner.model.Course;
 
 @Component
@@ -13,7 +14,7 @@ public class CourseMapper {
       return null;
     }
 
-    return new CourseDTO(course.getId(), course.getName(), course.getCategory());
+    return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue());
   }
 
   public Course toEntity(CourseDTO dto) {
@@ -26,16 +27,21 @@ public class CourseMapper {
       course.setId(dto.id());
     }
 
-    if (dto.name() != null) {
-      course.setName(dto.name());
-    }
-
-    if (dto.category() != null) {
-      course.setCategory(dto.category());
-    }
-
-    course.setStatus("Ativo");
+    course.setName(dto.name());
+    course.setCategory(convertCategoryValue(dto.category()));
 
     return course;
+  }
+
+  public Category convertCategoryValue(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    return switch (value) {
+      case "Front-end" -> Category.FRONT_END;
+      case "Back-end" -> Category.BACK_END;
+      default -> throw new IllegalArgumentException("Categoria inválida: " + value);
+    };
   }
 }
