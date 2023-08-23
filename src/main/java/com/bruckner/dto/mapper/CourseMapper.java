@@ -3,6 +3,7 @@ package com.bruckner.dto.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bruckner.model.Lesson;
 import org.springframework.stereotype.Component;
 
 import com.bruckner.dto.CourseDTO;
@@ -39,6 +40,16 @@ public class CourseMapper {
     course.setName(dto.name());
     course.setCategory(convertCategoryValue(dto.category()));
 
+    List<Lesson> lessons = dto.lessons().stream().map(lessonDTO -> {
+      var lesson = new Lesson();
+      lesson.setId(lessonDTO.id());
+      lesson.setName(lessonDTO.name());
+      lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
+      lesson.setCourse(course);
+      return lesson;
+    }).collect(Collectors.toList());
+
+    course.setLessons(lessons);
     return course;
   }
 

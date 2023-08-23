@@ -3,6 +3,7 @@ package com.bruckner.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bruckner.model.Course;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -48,8 +49,12 @@ public class CourseService {
 
     return courseRepository.findById(id)
         .map(recordFound -> {
+          Course course = courseMapper.toEntity(courseDTO);
           recordFound.setName(courseDTO.name());
           recordFound.setCategory(courseMapper.convertCategoryValue(courseDTO.category()));
+
+          recordFound.getLessons().clear();
+          course.getLessons().forEach(recordFound.getLessons()::add);
           return courseMapper.toDTO(courseRepository.save(recordFound));
         }).orElseThrow(() -> new RecordNotFoundException(id));
   }
